@@ -3,9 +3,9 @@ package ru.netology.java;
 public class Film {
 
     static int filmsCount = 0;
-    String filmTitle;
-    String filmGenre;
-    String releaseYear;
+    private String filmTitle;
+    private String filmGenre;
+    private String releaseYear;
 
     public Film() {
         filmsCount++;

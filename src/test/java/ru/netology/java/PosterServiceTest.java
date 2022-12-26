@@ -7,21 +7,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class PosterServiceTest {
 
-    //тест создания пустого массива
-    @Test
-    public void shouldCreateEmptyArray() {
-        PosterService poster = new PosterService();
-
-        int expected = 0;
-
-        Assertions.assertEquals(expected, poster.getFilmsCount());
-    }
-
     //добавляю 15 фильмов в список
 
-    PosterService poster = new PosterService();
-
-    public void setup() {
+    public void setup(PosterService poster) {
         poster.addFilm("Зеленая Миля", "Драма", "1999");
         poster.addFilm("Список Шиндлера", "Драма", "1993");
         poster.addFilm("Побег из Шоушенка", "Драма", "1994");
@@ -39,11 +27,18 @@ public class PosterServiceTest {
         poster.addFilm("Темный рыцарь", "Фантастика", "2008");
     }
 
-    public void secondSetup(PosterService list) {
-        Film[] tmp = poster.findAll();
-        for (int i = 0; i < poster.getFilmsCount(); i++) {
-            list.addFilm(tmp[i].getFilmTitle(), tmp[i].getFilmGenre(), tmp[i].getReleaseYear());
-        }
+    PosterService poster = new PosterService();
+    PosterService posterLess = new PosterService(7);
+    PosterService posterMore = new PosterService(14);
+
+    //тест создания пустого массива
+    @Test
+    public void shouldCreateEmptyArray() {
+        PosterService emptyPoster = new PosterService();
+
+        int expected = 0;
+
+        Assertions.assertEquals(expected, poster.getFilmsCount());
     }
 
     //тесты добавления фильмов
@@ -54,7 +49,7 @@ public class PosterServiceTest {
             "2, Побег из Шоушенка"
     })
     public void shouldAddFilmsFirst(int number, String expected) {
-        setup();
+        setup(poster);
         Film actual = poster.getFilmByNumber(number);
 
         Assertions.assertEquals(expected, actual.getFilmTitle());
@@ -67,7 +62,7 @@ public class PosterServiceTest {
             "14, Темный рыцарь"
     })
     public void shouldAddFilmsLast(int number, String expected) {
-        setup();
+        setup(poster);
         Film actual = poster.getFilmByNumber(number);
 
         Assertions.assertEquals(expected, actual.getFilmTitle());
@@ -82,7 +77,7 @@ public class PosterServiceTest {
             "7, Интерстеллар"
     })
     public void shouldFindLast(int changedId, String expected) {
-        setup();
+        setup(poster);
         Film[] findLastArray = poster.findLast();
         String actual = findLastArray[changedId].getFilmTitle();
 
@@ -96,7 +91,7 @@ public class PosterServiceTest {
             "2, 1+1"
     })
     public void shouldFindFirst(int changedId, String expected) {
-        setup();
+        setup(poster);
         Film[] findLastArray = poster.findLast();
         String actual = findLastArray[changedId].getFilmTitle();
 
@@ -112,9 +107,7 @@ public class PosterServiceTest {
             "2, 1+1"
     })
     public void shouldFindLastMinCustom(int changedId, String expected) {
-        setup();
-        PosterService posterLess = new PosterService(7);
-        secondSetup(posterLess);
+        setup(posterLess);
         Film[] findLastArray = posterLess.findLast();
         String actual = findLastArray[changedId].getFilmTitle();
 
@@ -128,9 +121,7 @@ public class PosterServiceTest {
             "4, Криминальное чтиво"
     })
     public void shouldFindFirstMinCustom(int changedId, String expected) {
-        setup();
-        PosterService posterLess = new PosterService(7);
-        secondSetup(posterLess);
+        setup(posterLess);
         Film[] findLastArray = posterLess.findLast();
         String actual = findLastArray[changedId].getFilmTitle();
 
@@ -146,9 +137,7 @@ public class PosterServiceTest {
             "2, 1+1"
     })
     public void shouldFindLastMaxCustom(int changedId, String expected) {
-        setup();
-        PosterService posterMore = new PosterService(14);
-        secondSetup(posterMore);
+        setup(posterMore);
         Film[] findLastArray = posterMore.findLast();
         String actual = findLastArray[changedId].getFilmTitle();
 
@@ -162,9 +151,7 @@ public class PosterServiceTest {
             "11, Форрест Гамп"
     })
     public void shouldFindFirstMaxCustom(int changedId, String expected) {
-        setup();
-        PosterService posterMore = new PosterService(14);
-        secondSetup(posterMore);
+        setup(posterMore);
         Film[] findLastArray = posterMore.findLast();
         String actual = findLastArray[changedId].getFilmTitle();
 
