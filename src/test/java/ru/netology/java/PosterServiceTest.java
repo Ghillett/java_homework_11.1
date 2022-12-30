@@ -35,7 +35,6 @@ public class PosterServiceTest {
     @Test
     public void shouldCreateEmptyArray() {
         PosterService emptyPoster = new PosterService();
-
         int expected = 0;
 
         Assertions.assertEquals(expected, poster.getFilmsCount());
@@ -68,93 +67,46 @@ public class PosterServiceTest {
         Assertions.assertEquals(expected, actual.getFilmTitle());
     }
 
-    //тесты findLast() со значением по дефолту
+    //тест findLast() со значением по дефолту
 
-    @ParameterizedTest
-    @CsvSource({
-            "9, Тайна Коко",
-            "8, Назад в будущее",
-            "7, Интерстеллар"
-    })
-    public void shouldFindLast(int changedId, String expected) {
+    @Test
+    public void shouldFindLast() {
         setup(poster);
-        Film[] findLastArray = poster.findLast();
-        String actual = findLastArray[changedId].getFilmTitle();
+        Film[] expected = {poster.getFilmByNumber(14), poster.getFilmByNumber(13),
+                poster.getFilmByNumber(12), poster.getFilmByNumber(11),
+                poster.getFilmByNumber(10), poster.getFilmByNumber(9),
+                poster.getFilmByNumber(8), poster.getFilmByNumber(7),
+                poster.getFilmByNumber(6), poster.getFilmByNumber(5)};
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, poster.findLast());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "0, Темный рыцарь",
-            "1, Король Лев",
-            "2, 1+1"
-    })
-    public void shouldFindFirst(int changedId, String expected) {
-        setup(poster);
-        Film[] findLastArray = poster.findLast();
-        String actual = findLastArray[changedId].getFilmTitle();
+    //тест findLast() со значением меньше дефолтного (7)
 
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //тесты findLast() со значением меньше дефолтного
-
-    @ParameterizedTest
-    @CsvSource({
-            "0, Темный рыцарь",
-            "1, Король Лев",
-            "2, 1+1"
-    })
-    public void shouldFindLastMinCustom(int changedId, String expected) {
+    @Test
+    public void shouldFindLastLess() {
         setup(posterLess);
-        Film[] findLastArray = posterLess.findLast();
-        String actual = findLastArray[changedId].getFilmTitle();
+        Film[] expected = {posterLess.getFilmByNumber(14), posterLess.getFilmByNumber(13),
+                posterLess.getFilmByNumber(12), posterLess.getFilmByNumber(11),
+                posterLess.getFilmByNumber(10), posterLess.getFilmByNumber(9),
+                posterLess.getFilmByNumber(8)};
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, posterLess.findLast());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "6, Властелин колец: Братство Кольца",
-            "5, Властелин колец: Две крепости",
-            "4, Криминальное чтиво"
-    })
-    public void shouldFindFirstMinCustom(int changedId, String expected) {
-        setup(posterLess);
-        Film[] findLastArray = posterLess.findLast();
-        String actual = findLastArray[changedId].getFilmTitle();
+    // тесты findLast() со значением выше дефолтного (14)
 
-        Assertions.assertEquals(expected, actual);
-    }
-
-    // тесты findLast() со значением выше дефолтного
-
-    @ParameterizedTest
-    @CsvSource({
-            "0, Темный рыцарь",
-            "1, Король Лев",
-            "2, 1+1"
-    })
-    public void shouldFindLastMaxCustom(int changedId, String expected) {
+    @Test
+    public void shouldFindLastMore() {
         setup(posterMore);
-        Film[] findLastArray = posterMore.findLast();
-        String actual = findLastArray[changedId].getFilmTitle();
+        Film[] expected = {posterMore.getFilmByNumber(14), posterMore.getFilmByNumber(13),
+                posterMore.getFilmByNumber(12), posterMore.getFilmByNumber(11),
+                posterMore.getFilmByNumber(10), posterMore.getFilmByNumber(9),
+                posterMore.getFilmByNumber(8), posterMore.getFilmByNumber(7),
+                posterMore.getFilmByNumber(6), posterMore.getFilmByNumber(5),
+                posterMore.getFilmByNumber(4), posterMore.getFilmByNumber(3),
+                posterMore.getFilmByNumber(2), posterMore.getFilmByNumber(1)};
 
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "13, Список Шиндлера",
-            "12, Побег из Шоушенка",
-            "11, Форрест Гамп"
-    })
-    public void shouldFindFirstMaxCustom(int changedId, String expected) {
-        setup(posterMore);
-        Film[] findLastArray = posterMore.findLast();
-        String actual = findLastArray[changedId].getFilmTitle();
-
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, posterMore.findLast());
     }
 }
